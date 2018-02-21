@@ -7,18 +7,31 @@ public class Activator : MonoBehaviour {
 	public KeyCode key;
 	public bool active = false;
 	GameObject note;
+	SpriteRenderer sr;
+	Color oldColor;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Awake () {
+		sr = GetComponent<SpriteRenderer> ();
 	}
-	
+
+	void Start()
+	{
+		oldColor = sr.color;
+	}
 	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown (key) && active) 
+	void Update () 
+	{
+		if (Input.GetKeyDown(key))
 		{
-			Destroy (note);
+				StartCoroutine(Pressed());
+				
+				if(active)
+				{
+					Destroy(note);
+				}
 		}
+		 
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
@@ -35,5 +48,12 @@ public class Activator : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D col)
 	{
 		active = false;
+	}
+
+	IEnumerator Pressed()
+	{
+		sr.color = new Color (0, 0, 0);
+		yield return new WaitForSeconds(0.2f);
+		sr.color = oldColor;
 	}
 }
