@@ -29,9 +29,16 @@ public class Activator : MonoBehaviour {
 				if(active)
 				{
 					Destroy(note);
+					AddScore ();
+					active = false;
 				}
 		}
 		 
+	}
+
+	void AddScore ()
+	{
+		PlayerPrefs.SetInt ("Score", PlayerPrefs.GetInt ("Score") + 100);
 	}
 
 	void OnTriggerEnter2D(Collider2D col)
@@ -50,10 +57,11 @@ public class Activator : MonoBehaviour {
 		active = false;
 	}
 
+
 	IEnumerator Pressed()
 	{
 		sr.color = new Color (0, 0, 0);
-		yield return new WaitForSeconds(0.2f);
+		yield return new WaitForSeconds(0.05f);
 		sr.color = oldColor;
 	}
 }
