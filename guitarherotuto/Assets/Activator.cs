@@ -9,29 +9,38 @@ public class Activator : MonoBehaviour {
 	GameObject note;
 	SpriteRenderer sr;
 	Color oldColor;
+	public bool createMode;
+	public GameObject spawnedNote;
 
-	// Use this for initialization
+
 	void Awake () {
 		sr = GetComponent<SpriteRenderer> ();
 	}
+
+
 
 	void Start()
 	{
 		oldColor = sr.color;
 	}
+
 	// Update is called once per frame
 	void Update () 
 	{
 		if (Input.GetKeyDown(key))
 		{
-				StartCoroutine(Pressed());
-				
-				if(active)
-				{
-					Destroy(note);
+			if (createMode) {
+				Instantiate (spawnedNote, transform.position, Quaternion.identity);
+			}
+			else{
+				StartCoroutine (Pressed ());
+					
+				if (active) {
+					Destroy (note);
 					AddScore ();
 					active = false;
 				}
+			}
 		}
 		 
 	}
